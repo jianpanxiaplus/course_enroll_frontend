@@ -7,7 +7,7 @@
         {{ getGradeLabel(course.publisherGrade) }}
       </el-descriptions-item>
       <el-descriptions-item label="班级">
-        {{ getGradeLabel(course.publisherClass) }}
+        {{ course.publisherClass }}班
       </el-descriptions-item>
       <el-descriptions-item label="授课教师">
         {{ course.publisherName }}

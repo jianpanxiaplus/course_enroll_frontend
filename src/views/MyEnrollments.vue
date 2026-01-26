@@ -12,7 +12,7 @@
       </el-table-column>
       <el-table-column label="班级" width="100">
         <template #default="scope">
-          {{ scope.row.publisherClass == 0 ? '全部班': scope.row.publisherClass + '班'}}
+          {{ scope.row.publisherClass === 0 ? '全部班': scope.row.publisherClass + '班'}}
         </template>
       </el-table-column>
 

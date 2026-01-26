@@ -8,7 +8,7 @@
         <el-form-item label="课程名称" prop="name">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="课程简介">
+        <el-form-item label="课程简介" prop="description">
           <el-input type="textarea" v-model="form.description"></el-input>
         </el-form-item>
         <el-form-item label="课程名额" prop="maxCapacity">
@@ -17,32 +17,38 @@
         <el-form-item label="发布人姓名" prop="publisherName">
           <el-input v-model="form.publisherName"></el-input>
         </el-form-item>
-        <el-form-item label="发布人手机号">
+        <el-form-item label="发布人手机号" prop="publisherPhone">
           <el-input v-model="form.publisherPhone"></el-input>
         </el-form-item>
         <el-form-item label="发布人工号/学号">
           <el-input v-model="form.publisherJobNumber"></el-input>
         </el-form-item>
-        <el-form-item label="年级">
-          <el-select v-model="form.publisherGrade" placeholder="请选择年级">
+        <el-form-item label="年级" prop="publisherGrade">
+          <el-select v-model="form.publisherGrade" placeholder="请选择" style="width: 90px" clearable>
+<!--            <el-option-->
+<!--                v-for="grade in gradeOptions"-->
+<!--                :key="grade.value"-->
+<!--                :label="grade.label"-->
+<!--                :value="grade.value"-->
+<!--            />-->
             <el-option
-                v-for="grade in gradeOptions"
-                :key="grade.value"
-                :label="grade.label"
-                :value="grade.value"
+                v-for="n in 9"
+                :key="n"
+                :label="`${n}`"
+                :value="n"
             />
-          </el-select>
+          </el-select> 年级
         </el-form-item>
-        <el-form-item label="班级">
-          <el-select v-model="form.publisherClass" placeholder="请选择班级">
-            <el-option label="未分配" :value="0"/>
+        <el-form-item label="班级" prop="publisherClass">
+          <el-select v-model="form.publisherClass" placeholder="请选择" style="width: 90px" clearable>
+<!--            <el-option label="全部班级" :value="0"/>-->
             <el-option
                 v-for="n in 100"
                 :key="n"
-                :label="`${n}班`"
-                :value="n.toString()"
+                :label="`${n}`"
+                :value="n"
             />
-          </el-select>
+          </el-select> 班
         </el-form-item>
       </el-form>
       <span slot="footer">
@@ -94,17 +100,20 @@ export default {
         publisherName: '',
         publisherPhone: '',
         publisherJobNumber: '',
-        publisherGrade: '',
-        publisherClass: ''
+        publisherGrade: null,
+        publisherClass: null
       },
       rules: {
         name: [{required: true, message: '请输入课程名称', trigger: 'blur'}],
         description: [{required: true, message: '请输入课程内容描述', trigger: 'blur'}],
         maxCapacity: [{required: true, message: '请输入可报名名额', trigger: 'blur'}],
-        publisherName: [{required: true, message: '请输入发布人姓名', trigger: 'blur'}]
+        publisherName: [{required: true, message: '请输入发布人姓名', trigger: 'blur'}],
+        publisherPhone: [{required: true, message: '请输入发布人手机号', trigger: 'blur'}],
+        publisherGrade: [{ required: true, message: '请选择年级', trigger: 'change' }],
+        publisherClass: [{ required: true, message: '请选择班级', trigger: 'change' }],
       },
       gradeOptions: [
-        {value: '0', label: '全部年级'},
+        // {value: '0', label: '全部年级'},
         {value: '1', label: '一年级'},
         {value: '2', label: '二年级'},
         {value: '3', label: '三年级'},
@@ -139,7 +148,7 @@ export default {
       this.courses = res.data.data
       this.courses.forEach(course => {
         course.publisherGrade = this.getGradeLabel(Number(course.publisherGrade))
-        course.publisherClass = course.publisherClass === '0'? '全部班': course.publisherClass+'班'
+        course.publisherClass = course.publisherClass === 0 ? '全部班': course.publisherClass+'班'
       })
       console.log(this.courses)
     },
@@ -162,11 +171,13 @@ export default {
       this.form = {...row}
       this.dialogVisible = true
       this.$nextTick(() => this.$refs.form.clearValidate())
+      this.courseDetail(this.form.id)
     },
     async saveCourse() {
       this.$refs.form.validate(async valid => {
         if (!valid) return
         try {
+          console.log('this.form',this.form)
           if (this.form.id) {
             await this.$http.put(`/api/courses/${this.form.id}`, this.form)
           } else {
@@ -200,6 +211,10 @@ export default {
       };
       return map[num] || `${num}年级`;
     },
+    async courseDetail(id) {
+      const res = await this.$http.get(`/api/courses/${id}`)
+      this.form = res.data.data
+    }
   },
   mounted() {
     this.loadCourses()
