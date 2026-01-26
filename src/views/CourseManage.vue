@@ -8,7 +8,7 @@
         <el-form-item label="课程名称" prop="name">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="课程描述">
+        <el-form-item label="课程简介">
           <el-input type="textarea" v-model="form.description"></el-input>
         </el-form-item>
         <el-form-item label="课程名额" prop="maxCapacity">
@@ -58,7 +58,7 @@
     <!-- 课程列表 -->
     <el-table :data="courses" border style="width: 100%">
       <el-table-column prop="name" label="课程名称" width="180"></el-table-column>
-      <el-table-column prop="description" label="课程内容描述" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="description" label="课程简介" show-overflow-tooltip></el-table-column>
       <el-table-column prop="maxCapacity" label="课程名额" width="80"></el-table-column>
       <el-table-column prop="publisherName" label="发布人姓名" width="100"></el-table-column>
       <el-table-column prop="publisherPhone" label="发布人手机号" width="120"></el-table-column>
@@ -104,7 +104,7 @@ export default {
         publisherName: [{required: true, message: '请输入发布人姓名', trigger: 'blur'}]
       },
       gradeOptions: [
-        {value: '0', label: '全年级'},
+        {value: '0', label: '全部年级'},
         {value: '1', label: '一年级'},
         {value: '2', label: '二年级'},
         {value: '3', label: '三年级'},
@@ -139,7 +139,7 @@ export default {
       this.courses = res.data.data
       this.courses.forEach(course => {
         course.publisherGrade = this.getGradeLabel(Number(course.publisherGrade))
-        course.publisherClass = course.publisherClass === '0'? '全班级': course.publisherClass+'班'
+        course.publisherClass = course.publisherClass === '0'? '全部班': course.publisherClass+'班'
       })
       console.log(this.courses)
     },
@@ -190,29 +190,16 @@ export default {
         this.$message.error('删除失败')
       }
     },
-    // 将数字 grade 转为中文标签
-    getGradeLabel(gradeNum) {
-      if (!gradeNum && gradeNum === 0) return '全年级';
-
-      const labels = ['全年级', '一年级', '二年级', '三年级', '四年级', '五年级', '六年级', '七年级', '八年级', '九年级'];
-      let label = labels[gradeNum];
-      return label;
-      // // 如果 gradeNum 在 0～6 范围内
-      // if (gradeNum >= 0 && gradeNum < labels.length) {
-      //   return labels[gradeNum];
-      // }
-      //
-      // // 超出范围（比如初中/高中），可自定义逻辑
-      // if (gradeNum === 7) return '初一';
-      // if (gradeNum === 8) return '初二';
-      // if (gradeNum === 9) return '初三';
-      // if (gradeNum === 10) return '高一';
-      // if (gradeNum === 11) return '高二';
-      // if (gradeNum === 12) return '高三';
-
-      // 默认 fallback
-      // return `${gradeNum}年级`;
-    }
+    // 年级数字转中文
+    getGradeLabel(num) {
+      const map = {
+        0: '全部年级',
+        1: '一年级', 2: '二年级', 3: '三年级',
+        4: '四年级', 5: '五年级', 6: '六年级',
+        7: '七年级', 8: '八年级', 9: '九年级',
+      };
+      return map[num] || `${num}年级`;
+    },
   },
   mounted() {
     this.loadCourses()
