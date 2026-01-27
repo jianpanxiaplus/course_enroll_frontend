@@ -11,17 +11,23 @@
         <el-form-item label="课程简介" prop="description">
           <el-input type="textarea" v-model="form.description"></el-input>
         </el-form-item>
-        <el-form-item label="课程名额" prop="maxCapacity">
+        <el-form-item label="上课时间" prop="schoolTime">
+          <el-input v-model="form.schoolTime" style="width: 180px"></el-input>
+        </el-form-item>
+        <el-form-item label="总名额" prop="maxCapacity">
           <el-input-number v-model="form.maxCapacity" :min="1" :max="1000"></el-input-number>
         </el-form-item>
-        <el-form-item label="发布人姓名" prop="publisherName">
-          <el-input v-model="form.publisherName"></el-input>
+        <el-form-item label="剩余名额" prop="remainingCapacity">
+          <el-input-number v-model="form.remainingCapacity" :min="1" :max="1000"></el-input-number>
         </el-form-item>
-        <el-form-item label="发布人手机号" prop="publisherPhone">
-          <el-input v-model="form.publisherPhone"></el-input>
+        <el-form-item label="教师名" prop="publisherName">
+          <el-input v-model="form.publisherName" style="width: 90px"></el-input>
         </el-form-item>
-        <el-form-item label="发布人工号/学号">
-          <el-input v-model="form.publisherJobNumber"></el-input>
+        <el-form-item label="手机号" prop="publisherPhone">
+          <el-input v-model="form.publisherPhone" style="width: 120px"></el-input>
+        </el-form-item>
+        <el-form-item label="工号/学号">
+          <el-input v-model="form.publisherJobNumber" style="width: 120px"></el-input>
         </el-form-item>
         <el-form-item label="年级" prop="publisherGrade">
           <el-select v-model="form.publisherGrade" placeholder="请选择" style="width: 90px" clearable>
@@ -65,10 +71,13 @@
     <el-table :data="courses" border style="width: 100%">
       <el-table-column prop="name" label="课程名称" width="180"></el-table-column>
       <el-table-column prop="description" label="课程简介" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="maxCapacity" label="课程名额" width="80"></el-table-column>
-      <el-table-column prop="publisherName" label="发布人姓名" width="100"></el-table-column>
-      <el-table-column prop="publisherPhone" label="发布人手机号" width="120"></el-table-column>
-      <el-table-column prop="publisherJobNumber" label="发布人工号/学号" width="120"></el-table-column>
+      <el-table-column prop="schoolTime" label="上课时间" width="180"></el-table-column>
+      <el-table-column prop="maxCapacity" label="总名额" width="80"></el-table-column>
+      <el-table-column prop="remainingCapacity" label="剩余名额" width="80"></el-table-column>
+      <el-table-column prop="registeredCapacity" label="已报名名额" width="100"></el-table-column>
+      <el-table-column prop="publisherName" label="教师名" width="100"></el-table-column>
+      <el-table-column prop="publisherPhone" label="手机号" width="120"></el-table-column>
+      <el-table-column prop="publisherJobNumber" label="工号/学号" width="120"></el-table-column>
       <el-table-column prop="publisherGrade" label="年级" width="100"></el-table-column>
       <el-table-column prop="publisherClass" label="班级" width="120"></el-table-column>
       <el-table-column prop="createTime" label="发布时间" width="160">
@@ -97,20 +106,24 @@ export default {
         name: '',
         description: '',
         maxCapacity: 30,
+        remainingCapacity: 30,
         publisherName: '',
         publisherPhone: '',
         publisherJobNumber: '',
         publisherGrade: null,
-        publisherClass: null
+        publisherClass: null,
+        schoolTime: null,
       },
       rules: {
         name: [{required: true, message: '请输入课程名称', trigger: 'blur'}],
         description: [{required: true, message: '请输入课程内容描述', trigger: 'blur'}],
-        maxCapacity: [{required: true, message: '请输入可报名名额', trigger: 'blur'}],
+        maxCapacity: [{required: true, message: '请输入总名额', trigger: 'blur'}],
+        remainingCapacity: [{required: true, message: '请输入剩余名额', trigger: 'blur'}],
         publisherName: [{required: true, message: '请输入发布人姓名', trigger: 'blur'}],
         publisherPhone: [{required: true, message: '请输入发布人手机号', trigger: 'blur'}],
         publisherGrade: [{ required: true, message: '请选择年级', trigger: 'change' }],
         publisherClass: [{ required: true, message: '请选择班级', trigger: 'change' }],
+        schoolTime: [{ required: true, message: '请输入上课时间', trigger: 'blur' }],
       },
       gradeOptions: [
         // {value: '0', label: '全部年级'},
@@ -158,6 +171,7 @@ export default {
         name: '',
         description: '',
         maxCapacity: 30,
+        remainingCapacity: 30,
         publisherName: '',
         publisherPhone: '',
         publisherJobNumber: '',

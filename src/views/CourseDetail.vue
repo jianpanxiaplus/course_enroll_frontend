@@ -3,20 +3,26 @@
     <h2>{{ course.name }}</h2>
 
     <el-descriptions :column="1" border style="margin-top: 20px;">
+      <el-descriptions-item label="课程简介">
+        {{ course.description || '暂无介绍' }}
+      </el-descriptions-item>
+      <el-descriptions-item label="上课时间">
+        {{ course.schoolTime }}
+      </el-descriptions-item>
+      <el-descriptions-item label="授课教师">
+        {{ course.publisherName }}
+      </el-descriptions-item>
       <el-descriptions-item label="年级">
         {{ getGradeLabel(course.publisherGrade) }}
       </el-descriptions-item>
       <el-descriptions-item label="班级">
         {{ course.publisherClass }}班
       </el-descriptions-item>
-      <el-descriptions-item label="授课教师">
-        {{ course.publisherName }}
-      </el-descriptions-item>
-      <el-descriptions-item label="课程简介">
-        {{ course.description || '暂无介绍' }}
-      </el-descriptions-item>
       <el-descriptions-item label="课程名额">
         {{ course.maxCapacity }} 人
+      </el-descriptions-item>
+      <el-descriptions-item label="剩余名额">
+        {{ course.remainingCapacity }} 人
       </el-descriptions-item>
     </el-descriptions>
 
