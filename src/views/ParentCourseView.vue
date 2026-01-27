@@ -11,8 +11,8 @@
       <el-table-column prop="name" label="课程名称" width="180"></el-table-column>
       <el-table-column prop="description" label="课程简介" show-overflow-tooltip></el-table-column>
       <el-table-column prop="schoolTime" label="上课时间" width="180"></el-table-column>
-      <el-table-column prop="maxCapacity" label="总名额" width="100"></el-table-column>
-      <el-table-column prop="remainingCapacity" label="剩余名额" width="100"></el-table-column>
+      <el-table-column prop="maxCapacity" label="总人数" width="100"></el-table-column>
+      <el-table-column prop="remainingCapacity" label="可报名人数" width="100"></el-table-column>
 
       <el-table-column label="年级" width="180">
         <template #default="scope">

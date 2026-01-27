@@ -14,10 +14,10 @@
         <el-form-item label="上课时间" prop="schoolTime">
           <el-input v-model="form.schoolTime" style="width: 180px"></el-input>
         </el-form-item>
-        <el-form-item label="总名额" prop="maxCapacity">
+        <el-form-item label="总人数" prop="maxCapacity">
           <el-input-number v-model="form.maxCapacity" :min="1" :max="1000"></el-input-number>
         </el-form-item>
-        <el-form-item label="剩余名额" prop="remainingCapacity">
+        <el-form-item label="可报名人数" prop="remainingCapacity">
           <el-input-number v-model="form.remainingCapacity" :min="1" :max="1000"></el-input-number>
         </el-form-item>
         <el-form-item label="教师名" prop="publisherName">
@@ -72,9 +72,9 @@
       <el-table-column prop="name" label="课程名称" width="180"></el-table-column>
       <el-table-column prop="description" label="课程简介" show-overflow-tooltip></el-table-column>
       <el-table-column prop="schoolTime" label="上课时间" width="180"></el-table-column>
-      <el-table-column prop="maxCapacity" label="总名额" width="80"></el-table-column>
-      <el-table-column prop="remainingCapacity" label="剩余名额" width="80"></el-table-column>
-      <el-table-column prop="registeredCapacity" label="已报名名额" width="100"></el-table-column>
+      <el-table-column prop="maxCapacity" label="总人数" width="80"></el-table-column>
+      <el-table-column prop="remainingCapacity" label="可报名人数" width="100"></el-table-column>
+      <el-table-column prop="registeredCapacity" label="已报名人数" width="100"></el-table-column>
       <el-table-column prop="publisherName" label="教师名" width="100"></el-table-column>
       <el-table-column prop="publisherPhone" label="手机号" width="120"></el-table-column>
       <el-table-column prop="publisherJobNumber" label="工号/学号" width="120"></el-table-column>

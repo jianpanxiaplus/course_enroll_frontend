@@ -18,10 +18,10 @@
       <el-descriptions-item label="班级">
         {{ course.publisherClass }}班
       </el-descriptions-item>
-      <el-descriptions-item label="课程名额">
+      <el-descriptions-item label="总人数">
         {{ course.maxCapacity }} 人
       </el-descriptions-item>
-      <el-descriptions-item label="剩余名额">
+      <el-descriptions-item label="可报名人数">
         {{ course.remainingCapacity }} 人
       </el-descriptions-item>
     </el-descriptions>
