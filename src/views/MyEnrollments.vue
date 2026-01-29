@@ -1,7 +1,7 @@
 <template>
   <div class="my-enrollments">
+    <el-button @click="$router.back()"  type="primary">返回</el-button>
     <h2>我的报名课程</h2>
-
     <el-table :data="enrollments" border style="width: 100%; margin-top: 20px">
       <el-table-column prop="courseName" label="课程名称" width="180"></el-table-column>
 

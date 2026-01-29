@@ -1,11 +1,7 @@
 <template>
   <div class="parent-course-page">
     <h2>可报名课程列表</h2>
-    <div style="text-align: right; margin-bottom: 20px;">
-      <el-button type="primary" @click="goToMyEnrollments">
-        查看我的报名
-      </el-button>
-    </div>
+
 
     <!-- 筛选表单 -->
     <el-form :inline="true" :model="searchForm" @submit.prevent>
@@ -41,6 +37,9 @@
       <el-form-item>
         <el-button type="primary" @click="fetchCourses">查询</el-button>
         <el-button @click="resetSearch">重置</el-button>
+        <el-button type="primary" @click="goToMyEnrollments">
+          查看我的报名
+        </el-button>
       </el-form-item>
     </el-form>
 
