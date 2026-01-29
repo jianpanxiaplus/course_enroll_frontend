@@ -6,6 +6,44 @@
         查看我的报名
       </el-button>
     </div>
+
+    <!-- 筛选表单 -->
+    <el-form :inline="true" :model="searchForm" @submit.prevent>
+      <el-form-item label="课程名称">
+        <el-input v-model="searchForm.name" placeholder="请输入课程名" clearable />
+      </el-form-item>
+      <el-form-item label="上课时间">
+        <el-input v-model="searchForm.schoolTime" placeholder="请输入上课时间" clearable />
+      </el-form-item>
+      <el-form-item label="年级">
+        <el-select v-model="searchForm.publisherGrade" placeholder="请选择年级" clearable style="width: 130px">
+          <el-option label="一年级" value="1" />
+          <el-option label="二年级" value="2" />
+          <el-option label="三年级" value="3" />
+          <el-option label="四年级" value="4" />
+          <el-option label="五年级" value="5" />
+          <el-option label="六年级" value="6" />
+          <el-option label="七年级" value="7" />
+          <el-option label="八年级" value="8" />
+          <el-option label="九年级" value="9" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="班级">
+        <el-select v-model="searchForm.publisherClass" placeholder="请输入班级" clearable style="width: 130px">
+          <el-option
+              v-for="n in 100"
+              :key="n"
+              :label="`${n}班`"
+              :value="n"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="fetchCourses">查询</el-button>
+        <el-button @click="resetSearch">重置</el-button>
+      </el-form-item>
+    </el-form>
+
     <!-- 课程表格 -->
     <el-table :data="courses" border style="width: 100%; margin-top: 20px">
       <el-table-column prop="name" label="课程名称" width="180"></el-table-column>
@@ -66,6 +104,12 @@ export default {
   data() {
     return {
       courses: [],
+      searchForm : {
+        name: '',
+        schoolTime: '',
+        publisherGrade: '',
+        publisherClass: '',
+      },
       showSuccessDialog: false
     };
   },
@@ -76,12 +120,17 @@ export default {
     // 获取课程列表
     async fetchCourses() {
       try {
-        const res = await axios.get('/api/courses/list');
+        const res = await axios.post('/api/courses/available',this.searchForm);
         this.courses = res.data.data
       } catch (err) {
         this.$message.error('加载课程失败');
         console.error(err);
       }
+    },
+
+    resetSearch() {
+      this.searchForm = { name: '', publisherGrade: '', publisherClass: '' }
+      this.fetchCourses()
     },
 
     // 年级数字转中文
